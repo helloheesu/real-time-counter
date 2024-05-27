@@ -39,10 +39,10 @@ export default function Home() {
   return (
     <div className="h-screen">
       <div className="h-full max-w-2xl mx-auto flex flex-col justify-center items-center">
-        <TimerWrapper classNames="bg-green-200">
+        <TimerWrapper className="bg-green-200">
           {memoizedAbsoluteTimer}
         </TimerWrapper>
-        <TimerWrapper classNames="bg-purple-200">
+        <TimerWrapper className="bg-purple-200">
           <RelativeTimer
             currentTimeLeft={currentTimeLeft}
             absolutePlayState={absolutePlayState}

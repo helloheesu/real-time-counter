@@ -1,13 +1,10 @@
-const className = 'flex gap-4 text-3xl';
+import styled from 'styled-components';
 
-const ControllsWrapper = ({
-  children,
-  classNames,
-}: {
-  children: React.ReactNode;
-  classNames?: string;
-}) => {
-  return <div className={`${className} ${classNames}`}>{children}</div>;
-};
+const ControllsWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+`;
 
 export default ControllsWrapper;

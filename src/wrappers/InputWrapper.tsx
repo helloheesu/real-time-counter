@@ -1,17 +1,12 @@
-const InputWrapper = ({
-  children,
-  classNames,
-}: {
-  children: React.ReactNode;
-  classNames?: string;
-}) => {
-  return (
-    <div
-      className={`flex items-center gap-4 w-xl mx-auto justify-center ${classNames}`}
-    >
-      {children}
-    </div>
-  );
-};
+import styled from 'styled-components';
+
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 320px;
+  margin: 0 auto;
+  justify-content: center;
+`;
 
 export default InputWrapper;
