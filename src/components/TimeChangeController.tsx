@@ -29,18 +29,18 @@ const TimeChangeController = ({
         <TogglableButton
           disabled={disabled}
           onClick={() => {
-            onDelta(inputTime);
+            onDelta(-inputTime);
           }}
         >
-          뒤로
+          🔼
         </TogglableButton>
         <TogglableButton
           disabled={disabled}
           onClick={() => {
-            onDelta(-inputTime);
+            onDelta(inputTime);
           }}
         >
-          앞으로
+          🔽
         </TogglableButton>
       </ControllsWrapper>
     </InputWrapper>
