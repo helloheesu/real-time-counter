@@ -50,7 +50,7 @@ export default function Home() {
   }, [maxTime, absolutePlayState]);
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <MembersContext.Provider value={{ members, setMembers }}>
         <SelectedMemberContext.Provider
           value={{ selectedMember, setSelectedMember }}
@@ -76,7 +76,7 @@ export default function Home() {
                   absolutePlayState={absolutePlayState}
                 />
               </SectionWrapper>
-              <SectionWrapper className=" bg-yellow-50">
+              <SectionWrapper className=" bg-yellow-50 flex-1">
                 <LogDisplay />
               </SectionWrapper>
             </div>

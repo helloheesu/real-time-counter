@@ -18,6 +18,7 @@ const TimeInput = ({
           type="number"
           value={minutes || ''}
           placeholder="0"
+          step={2}
           onChange={(e) => {
             const inputMinutes = parseInt(e.target.value) || 0;
 

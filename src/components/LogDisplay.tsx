@@ -8,9 +8,9 @@ const LogDisplay = () => {
   return (
     <div className="flex flex-col items-center">
       <h1 className="mb-2">Log</h1>
-      <div className="grid gap-2 grid-cols-[4rem_2rem_4rem_4rem]">
+      <div className="grid gap-2 grid-cols-[4rem_4rem_4rem_4rem]">
         <span>이름</span>
-        <span className="text-right">추가</span>
+        <span>추가</span>
         <span>절대시간</span>
         <span>상대시간</span>
         {logs.map(({ member, delta, absoluteTimestamp, currentTimestamp }) => {
@@ -22,7 +22,7 @@ const LogDisplay = () => {
           return (
             <React.Fragment key={absoluteTimestamp}>
               <span>{member}</span>
-              <span className="text-right">{formatTime(delta).minutes}분</span>
+              <span>{formatTime(delta).minutes}분</span>
               <span>{`${pad(absMin)}:${pad(absSec)}`}</span>
               <span>{`${pad(curMin)}:${pad(curSec)}`}</span>
             </React.Fragment>
