@@ -15,3 +15,18 @@ export const SelectedMemberContext = createContext<{
   selectedMember: '',
   setSelectedMember: () => {},
 });
+
+export type Log = {
+  member: string;
+  delta: number;
+  absoluteTimestamp: number;
+  currentTimestamp: number;
+};
+
+export const LogsContext = createContext<{
+  logs: Log[];
+  addLog: (log: Log) => void;
+}>({
+  logs: [],
+  addLog: () => {},
+});

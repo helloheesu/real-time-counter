@@ -6,7 +6,13 @@ import { MILLIS_IN_MINUTE, PlayState } from '@/components/consts';
 import { useMemo, useState } from 'react';
 import SectionWrapper from '@/wrappers/SectionWrapper';
 import MembersInput from '@/components/MembersInput';
-import { MembersContext, SelectedMemberContext } from '@/MemberContext';
+import {
+  Log,
+  LogsContext,
+  MembersContext,
+  SelectedMemberContext,
+} from '@/MemberContext';
+import LogDisplay from '@/components/LogDisplay';
 
 const DEFAULT_MEMBERS = ['사람1', '사람2', '사람3'];
 
@@ -17,6 +23,7 @@ export default function Home() {
   const [currentTimeLeft, setCurrentTimeLeft] = useState<number>(maxTime);
   const [members, setMembers] = useState<string[]>(DEFAULT_MEMBERS);
   const [selectedMember, setSelectedMember] = useState<string>('');
+  const [logs, setLogs] = useState<Log[]>([]);
 
   const memoizedAbsoluteTimer = useMemo(() => {
     return (
@@ -48,23 +55,32 @@ export default function Home() {
         <SelectedMemberContext.Provider
           value={{ selectedMember, setSelectedMember }}
         >
-          <div className="h-full max-w-2xl mx-auto flex flex-col justify-center items-center">
-            <SectionWrapper className="bg-slate-200">
-              <MembersInput />
-            </SectionWrapper>
-            <SectionWrapper className="bg-green-200">
-              {memoizedAbsoluteTimer}
-            </SectionWrapper>
-            <SectionWrapper className="bg-purple-200">
-              <RelativeTimer
-                currentTimeLeft={currentTimeLeft}
-                absolutePlayState={absolutePlayState}
-              />
-            </SectionWrapper>
-            {/* <SectionWrapper className=" bg-yellow-50">
-          <Log />
-        </SectionWrapper> */}
-          </div>
+          <LogsContext.Provider
+            value={{
+              logs: logs,
+              addLog: (log) => {
+                setLogs((prevLogs) => [log, ...prevLogs]);
+              },
+            }}
+          >
+            <div className="h-full max-w-2xl mx-auto flex flex-col justify-center items-center">
+              <SectionWrapper className="bg-slate-200">
+                <MembersInput />
+              </SectionWrapper>
+              <SectionWrapper className="bg-green-200">
+                {memoizedAbsoluteTimer}
+              </SectionWrapper>
+              <SectionWrapper className="bg-purple-200">
+                <RelativeTimer
+                  currentTimeLeft={currentTimeLeft}
+                  absolutePlayState={absolutePlayState}
+                />
+              </SectionWrapper>
+              <SectionWrapper className=" bg-yellow-50">
+                <LogDisplay />
+              </SectionWrapper>
+            </div>
+          </LogsContext.Provider>
         </SelectedMemberContext.Provider>
       </MembersContext.Provider>
     </div>
