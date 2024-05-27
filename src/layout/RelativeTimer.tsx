@@ -21,7 +21,6 @@ const RelativeTimer = ({
     return (
       <TimeChangeController
         onDelta={(delta) => {
-          console.log('delta', delta, accDelta, currentTimeLeft);
           setAccDelta((prev) => prev + delta);
           addLog({
             member: selectedMember,

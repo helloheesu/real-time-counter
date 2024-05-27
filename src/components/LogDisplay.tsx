@@ -16,7 +16,7 @@ const LogDisplay = () => {
 
           return (
             <div key={absoluteTimestamp}>
-              <span>{member}</span> / <span>{formatTime(delta).seconds}초</span>{' '}
+              <span>{member}</span> / <span>{formatTime(delta).minutes}분</span>{' '}
               / <span>{`${pad(absMin)}:${pad(absSec)}`}</span> /{' '}
               <span>{`${pad(curMin)}:${pad(curSec)}`}</span>
             </div>
