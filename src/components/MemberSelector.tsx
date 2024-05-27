@@ -25,7 +25,6 @@ const MemberSelector = () => {
       >
         <option
           disabled
-          selected
           value=""
           style={{
             display: 'none',
