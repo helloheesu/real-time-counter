@@ -32,7 +32,7 @@ const TimeChangeController = ({
             onDelta(-inputTime);
           }}
         >
-          🔼
+          ↑
         </TogglableButton>
         <TogglableButton
           disabled={disabled}
@@ -40,7 +40,7 @@ const TimeChangeController = ({
             onDelta(inputTime);
           }}
         >
-          🔽
+          ↓
         </TogglableButton>
       </ControllsWrapper>
     </InputWrapper>
