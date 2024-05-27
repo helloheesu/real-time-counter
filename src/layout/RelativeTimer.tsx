@@ -1,0 +1,38 @@
+import TimeChangeController from '@/components/TimeChangeController';
+import { PlayState } from '../components/consts';
+import { useMemo, useState } from 'react';
+import Countdown from 'react-countdown';
+
+const RelativeTimer = ({
+  currentTimeLeft,
+  absolutePlayState,
+}: {
+  currentTimeLeft: number;
+  absolutePlayState: PlayState;
+}) => {
+  const [accDelta, setAccDelta] = useState(0);
+
+  const memoizedTimeChangeController = useMemo(() => {
+    return (
+      <TimeChangeController
+        onDelta={(delta) => {
+          setAccDelta((prev) => prev + delta);
+        }}
+      />
+    );
+  }, []);
+
+  return (
+    <>
+      {memoizedTimeChangeController}
+      <Countdown
+        controlled={true}
+        date={currentTimeLeft + accDelta}
+        autoStart={absolutePlayState === 'play'}
+        daysInHours={true}
+      />
+    </>
+  );
+};
+
+export default RelativeTimer;
