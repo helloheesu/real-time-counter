@@ -6,11 +6,9 @@ import Countdown from 'react-countdown';
 const RelativeTimer = ({
   currentTimeLeft,
   absolutePlayState,
-  members,
 }: {
   currentTimeLeft: number;
   absolutePlayState: PlayState;
-  members: string[];
 }) => {
   const [accDelta, setAccDelta] = useState(0);
 
@@ -20,7 +18,6 @@ const RelativeTimer = ({
         onDelta={(delta) => {
           setAccDelta((prev) => prev + delta);
         }}
-        members={members}
       />
     );
   }, []);

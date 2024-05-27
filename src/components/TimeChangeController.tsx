@@ -1,20 +1,21 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import TimeInput from './TimeInput';
 import ControllsWrapper from '@/wrappers/ControllsWrapper';
 import InputWrapper from '@/wrappers/InputWrapper';
 import { MILLIS_IN_MINUTE } from './consts';
 import TogglableButton from './TogglableButton';
 import MemberSelector from './MemberSelector';
+import { SelectedMemberContext } from '@/MemberContext';
 
 const TimeChangeController = ({
   onDelta,
-  members,
 }: {
   onDelta: (delta: number) => void;
-  members: string[];
 }) => {
   const [inputTime, setInputTime] = useState(2 * MILLIS_IN_MINUTE);
-  const [selectedMember, setSelectedMember] = useState<string>('');
+  const { selectedMember, setSelectedMember } = useContext(
+    SelectedMemberContext
+  );
 
   return (
     <InputWrapper>
@@ -26,13 +27,7 @@ const TimeChangeController = ({
         }}
       />
       <ControllsWrapper>
-        <MemberSelector
-          members={members}
-          selectedMember={selectedMember}
-          onSelect={(member) => {
-            setSelectedMember(member);
-          }}
-        />
+        <MemberSelector />
         <TogglableButton
           disabled={!selectedMember}
           onClick={() => {

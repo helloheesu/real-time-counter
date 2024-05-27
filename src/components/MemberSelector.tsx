@@ -1,3 +1,5 @@
+import { MembersContext, SelectedMemberContext } from '@/MemberContext';
+import { useContext } from 'react';
 import styled from 'styled-components';
 
 const Select = styled.select`
@@ -6,20 +8,18 @@ const Select = styled.select`
   text-align: center;
 `;
 
-const MemberSelector = ({
-  members,
-  selectedMember,
-  onSelect,
-}: {
-  members: string[];
-  selectedMember: string;
-  onSelect: (member: string) => void;
-}) => {
+const MemberSelector = () => {
+  const { selectedMember, setSelectedMember } = useContext(
+    SelectedMemberContext
+  );
+  const { members } = useContext(MembersContext);
+
   return (
     <div>
       <Select
         onChange={(e) => {
-          onSelect(e.target.value);
+          const selectedMember = e.target.value;
+          setSelectedMember(selectedMember);
         }}
         value={selectedMember}
       >
