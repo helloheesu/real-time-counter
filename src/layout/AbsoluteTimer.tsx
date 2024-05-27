@@ -34,7 +34,7 @@ const AbsoluteTimer = ({
 
   useEffect(() => {
     if (countdownApiRef.current) {
-      if (playState === 'play') {
+      if (playState === 'playing') {
         countdownApiRef.current.start();
       } else if (playState === 'pause') {
         countdownApiRef.current.pause();
@@ -52,6 +52,7 @@ const AbsoluteTimer = ({
           onStop={() => onStop()}
           onPause={() => onPause()}
           onStart={() => onStart()}
+          playState={playState}
         />
       </InputWrapper>
       <Countdown

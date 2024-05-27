@@ -12,7 +12,7 @@ const TimeInput = ({
 
   return (
     <div className="flex gap-4">
-      <div>
+      <div className="flex">
         <input
           className="w-10 mr-1"
           type="number"
@@ -28,7 +28,7 @@ const TimeInput = ({
         />
         <label>분</label>
       </div>
-      <div>
+      <div className="flex">
         <input
           className="w-10 mr-1"
           type="number"

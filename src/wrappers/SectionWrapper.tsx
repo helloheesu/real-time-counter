@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const TimerWrapper = styled.div`
+const SectionWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -9,4 +9,4 @@ const TimerWrapper = styled.div`
   padding: 1rem;
 `;
 
-export default TimerWrapper;
+export default SectionWrapper;
