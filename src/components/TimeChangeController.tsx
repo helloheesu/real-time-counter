@@ -29,7 +29,7 @@ const TimeChangeController = ({
         <TogglableButton
           disabled={disabled}
           onClick={() => {
-            onDelta(-inputTime);
+            onDelta(inputTime);
           }}
         >
           ↑
@@ -37,7 +37,7 @@ const TimeChangeController = ({
         <TogglableButton
           disabled={disabled}
           onClick={() => {
-            onDelta(inputTime);
+            onDelta(-inputTime);
           }}
         >
           ↓
