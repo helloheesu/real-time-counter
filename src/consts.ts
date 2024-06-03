@@ -8,4 +8,5 @@ export type Log = {
   delta: number;
   absoluteTimestamp: number;
   currentTimestamp: number;
+  currentTimestampAfterChange: number;
 };

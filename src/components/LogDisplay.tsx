@@ -14,25 +14,33 @@ const LogDisplay = () => {
         <span>절대시간</span>
         <span>상대시간</span>
         <span>변경 후</span>
-        {logs.map(({ member, delta, absoluteTimestamp, currentTimestamp }) => {
-          const { minutes: absMin, seconds: absSec } =
-            formatTime(absoluteTimestamp);
-          const { minutes: curMin, seconds: curSec } =
-            formatTime(currentTimestamp);
-          const { minutes: afterMin, seconds: afterSec } = formatTime(
-            currentTimestamp + delta
-          );
+        {logs.map(
+          ({
+            member,
+            delta,
+            absoluteTimestamp,
+            currentTimestamp,
+            currentTimestampAfterChange,
+          }) => {
+            const { minutes: absMin, seconds: absSec } =
+              formatTime(absoluteTimestamp);
+            const { minutes: curMin, seconds: curSec } =
+              formatTime(currentTimestamp);
+            const { minutes: afterMin, seconds: afterSec } = formatTime(
+              currentTimestampAfterChange
+            );
 
-          return (
-            <React.Fragment key={absoluteTimestamp}>
-              <span>{member}</span>
-              <span>{formatTime(delta).minutes}분</span>
-              <span>{`${pad(absMin)}:${pad(absSec)}`}</span>
-              <span>{`${pad(curMin)}:${pad(curSec)}`}</span>
-              <span>{`${pad(afterMin)}:${pad(afterSec)}`}</span>
-            </React.Fragment>
-          );
-        })}
+            return (
+              <React.Fragment key={absoluteTimestamp}>
+                <span>{member}</span>
+                <span>{formatTime(delta).minutes}분</span>
+                <span>{`${pad(absMin)}:${pad(absSec)}`}</span>
+                <span>{`${pad(curMin)}:${pad(curSec)}`}</span>
+                <span>{`${pad(afterMin)}:${pad(afterSec)}`}</span>
+              </React.Fragment>
+            );
+          }
+        )}
       </div>
     </div>
   );

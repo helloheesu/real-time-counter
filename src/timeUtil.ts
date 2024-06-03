@@ -13,3 +13,6 @@ export const formatTime = (
 };
 
 export const pad = (num: number): string => num.toString().padStart(2, '0');
+
+export const circle = (time: number, maxTime: number): number =>
+  (time + maxTime) % maxTime;
