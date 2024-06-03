@@ -1,5 +1,5 @@
 import TimeChangeController from '@/components/TimeChangeController';
-import { PlayState } from '../components/consts';
+import { PlayState } from '@/consts';
 import { useContext, useMemo, useState } from 'react';
 import Countdown from 'react-countdown';
 import { LogsContext, SelectedMemberContext } from '@/MemberContext';

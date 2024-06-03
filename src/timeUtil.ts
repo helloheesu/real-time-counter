@@ -1,4 +1,4 @@
-import { MILLIS_IN_MINUTE } from './components/consts';
+import { MILLIS_IN_MINUTE } from '@/consts';
 
 export const formatTime = (
   time: number

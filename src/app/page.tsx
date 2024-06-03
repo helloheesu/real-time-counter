@@ -2,7 +2,7 @@
 
 import AbsoluteTimer from '@/layout/AbsoluteTimer';
 import RelativeTimer from '@/layout/RelativeTimer';
-import { MILLIS_IN_MINUTE, PlayState } from '@/components/consts';
+import { MILLIS_IN_MINUTE, PlayState } from '@/consts';
 import { useMemo, useState } from 'react';
 import SectionWrapper from '@/wrappers/SectionWrapper';
 import MembersInput from '@/components/MembersInput';

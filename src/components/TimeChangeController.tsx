@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TimeInput from './TimeInput';
 import ControllsWrapper from '@/wrappers/ControllsWrapper';
 import InputWrapper from '@/wrappers/InputWrapper';
-import { MILLIS_IN_MINUTE } from './consts';
+import { MILLIS_IN_MINUTE } from '@/consts';
 import TogglableButton from './TogglableButton';
 import MemberSelector from './MemberSelector';
 

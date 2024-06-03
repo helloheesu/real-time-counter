@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import Countdown, { CountdownApi } from 'react-countdown';
 import PlayController from '../components/PlayController';
 import TimeInput from '../components/TimeInput';
-import { PlayState } from '../components/consts';
+import { PlayState } from '@/consts';
 import InputWrapper from '@/wrappers/InputWrapper';
 
 const AbsoluteTimer = ({

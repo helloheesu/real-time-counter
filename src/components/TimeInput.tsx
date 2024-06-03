@@ -1,5 +1,5 @@
 import { formatTime } from '@/timeUtil';
-import { MILLIS_IN_MINUTE } from './consts';
+import { MILLIS_IN_MINUTE } from '@/consts';
 
 const TimeInput = ({
   onInputTimeChange,
