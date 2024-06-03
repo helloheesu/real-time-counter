@@ -1,27 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { PlayState } from './consts';
 
-type useTimerProps = {
-  maxTime: number;
-  interval?: number;
-  overTime?: boolean;
-};
-
-const useTimer = ({
-  maxTime,
-  interval = 100,
-  overTime = false,
-}: useTimerProps) => {
+const useTimer = () => {
   const from = useRef<Date | null>(null);
-  const until = useRef<Date | null>(null);
+
+  const lastTimestamp = useRef<number>(0);
+  const lastAnimationID = useRef<number>(0);
 
   const [passed, setPassed] = useState(0);
-  const [left, setLeft] = useState(maxTime);
   const [playState, setPlayState] = useState<PlayState>('stopped');
 
   const start = () => {
     from.current = new Date();
-    until.current = new Date(from.current.getTime() + left);
 
     setPlayState('playing');
   };
@@ -34,33 +24,39 @@ const useTimer = ({
     setPlayState('stopped');
 
     setPassed(0);
-    setLeft(maxTime);
 
     from.current = null;
-    until.current = null;
   };
 
   useEffect(() => {
+    const tick = (timestamp: number) => {
+      if (from.current === null) return;
+
+      if (lastTimestamp.current !== 0) {
+        const delta = timestamp - lastTimestamp.current;
+        setPassed((prev) => prev + delta);
+      }
+
+      lastTimestamp.current = timestamp;
+
+      if (playState === 'playing') {
+        lastAnimationID.current = requestAnimationFrame(tick);
+      }
+    };
+
     if (playState === 'playing') {
-      const timer = setInterval(() => {
-        if (from.current === null || until.current === null) return;
-
-        setPassed(new Date().getTime() - from.current.getTime());
-        setLeft(until.current.getTime() - new Date().getTime());
-      }, interval);
-
-      return () => {
-        clearInterval(timer);
-      };
+      lastAnimationID.current = requestAnimationFrame(tick);
+    } else {
+      cancelAnimationFrame(lastAnimationID.current);
+      lastTimestamp.current = 0;
     }
-  }, [interval, left, passed, playState]);
+  }, [playState]);
 
   return {
     start,
     pause,
     stop,
     passed,
-    left,
   };
 };
 

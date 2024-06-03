@@ -19,13 +19,18 @@ const AbsoluteTimer = () => {
 
   const setCurrentTimePassed = useSetAtom(currentTimePassedAtom);
 
-  const { start, pause, stop, passed } = useTimer({
-    maxTime,
-  });
+  const { start, pause, stop, passed } = useTimer();
 
   useEffect(() => {
     setCurrentTimePassed(passed);
   }, [passed, setCurrentTimePassed]);
+
+  useEffect(() => {
+    if (passed >= maxTime) {
+      setAbsolutePlayState('stopped');
+      stop();
+    }
+  }, [maxTime, passed, setAbsolutePlayState, stop]);
 
   return (
     <>
