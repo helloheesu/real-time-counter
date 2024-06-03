@@ -4,7 +4,7 @@ import TimeInput from '../components/TimeInput';
 import InputWrapper from '@/wrappers/InputWrapper';
 import {
   absolutePlayStateAtom,
-  currentTimeLeftAtom,
+  currentTimePassedAtom,
   maxTimeAtom,
 } from '@/atoms';
 import { useAtom, useSetAtom } from 'jotai';
@@ -17,15 +17,15 @@ const AbsoluteTimer = () => {
   );
   const [maxTime, setMaxTime] = useAtom(maxTimeAtom);
 
-  const setCurrentTimeLeft = useSetAtom(currentTimeLeftAtom);
+  const setCurrentTimePassed = useSetAtom(currentTimePassedAtom);
 
-  const { start, pause, stop, passed, left } = useTimer({
+  const { start, pause, stop, passed } = useTimer({
     maxTime,
   });
 
   useEffect(() => {
-    setCurrentTimeLeft(left);
-  }, [left, setCurrentTimeLeft]);
+    setCurrentTimePassed(passed);
+  }, [passed, setCurrentTimePassed]);
 
   return (
     <>
@@ -50,7 +50,7 @@ const AbsoluteTimer = () => {
           playState={absolutePlayState}
         />
       </InputWrapper>
-      <Clock time={left} />
+      <Clock time={passed} />
     </>
   );
 };

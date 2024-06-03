@@ -2,20 +2,14 @@ import TimeChangeController from '@/components/TimeChangeController';
 import { Log } from '@/consts';
 import { useCallback, useState } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import {
-  currentTimeLeftAtom,
-  logsAtom,
-  maxTimeAtom,
-  selectedMemberAtom,
-} from '@/atoms';
+import { currentTimePassedAtom, logsAtom, selectedMemberAtom } from '@/atoms';
 import Clock from '@/components/Clock';
 
 const RelativeTimer = () => {
   const [accDelta, setAccDelta] = useState(0);
   const [selectedMember, setSelectedMember] = useAtom(selectedMemberAtom);
   const setLogs = useSetAtom(logsAtom);
-  const currentTimeLeft = useAtomValue(currentTimeLeftAtom);
-  const maxTime = useAtomValue(maxTimeAtom);
+  const currentTimePassed = useAtomValue(currentTimePassedAtom);
 
   const handleDelta = useCallback(
     (delta: number) => {
@@ -23,19 +17,19 @@ const RelativeTimer = () => {
       const newLog: Log = {
         member: selectedMember,
         delta,
-        absoluteTimestamp: currentTimeLeft,
-        currentTimestamp: currentTimeLeft + accDelta,
+        absoluteTimestamp: currentTimePassed,
+        currentTimestamp: currentTimePassed + accDelta,
       };
       setLogs((prevLogs) => [newLog, ...prevLogs]);
       setSelectedMember('');
     },
-    [accDelta, currentTimeLeft, selectedMember, setLogs, setSelectedMember]
+    [accDelta, currentTimePassed, selectedMember, setLogs, setSelectedMember]
   );
 
   return (
     <>
       <TimeChangeController onDelta={handleDelta} disabled={!selectedMember} />
-      <Clock time={currentTimeLeft + accDelta} />
+      <Clock time={currentTimePassed + accDelta} />
     </>
   );
 };
