@@ -8,7 +8,6 @@ export const formatTime = (
 } => {
   const minutes = Math.floor(time / MILLIS_IN_MINUTE);
   const seconds = (time % MILLIS_IN_MINUTE) / 1000;
-  console.log('format', time, minutes, seconds);
 
   return { minutes, seconds };
 };

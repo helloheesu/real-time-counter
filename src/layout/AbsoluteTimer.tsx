@@ -2,29 +2,29 @@ import { useRef, useEffect } from 'react';
 import Countdown, { CountdownApi } from 'react-countdown';
 import PlayController from '../components/PlayController';
 import TimeInput from '../components/TimeInput';
-import { PlayState } from '@/consts';
 import InputWrapper from '@/wrappers/InputWrapper';
+import {
+  absolutePlayStateAtom,
+  currentTimeLeftAtom,
+  maxTimeAtom,
+} from '@/atoms';
+import { useAtom, useSetAtom } from 'jotai';
 
-const AbsoluteTimer = ({
-  playState,
-  onStop,
-  onPause,
-  onStart,
-  maxTime,
-  onMaxTimeChange,
-  onTick,
-}: {
-  onStop: () => void;
-  onPause: () => void;
-  onStart: () => void;
-  maxTime: number;
-  onMaxTimeChange: (maxTimeInMilliseconds: number) => void;
-  playState: PlayState;
-  onTick: (totalTimeLeft: number) => void;
-}) => {
+const AbsoluteTimer = () => {
   const countdownRef = useRef<Countdown>(null);
   const countdownApiRef: React.MutableRefObject<CountdownApi | null> =
     useRef<CountdownApi>(null);
+
+  const [absolutePlayState, setAbsolutePlayState] = useAtom(
+    absolutePlayStateAtom
+  );
+  const [maxTime, setMaxTime] = useAtom(maxTimeAtom);
+
+  const setCurrentTimeLeft = useSetAtom(currentTimeLeftAtom);
+
+  const onTick = (totalTimeLeft: number) => {
+    setCurrentTimeLeft(totalTimeLeft);
+  };
 
   useEffect(() => {
     if (countdownRef.current) {
@@ -34,25 +34,34 @@ const AbsoluteTimer = ({
 
   useEffect(() => {
     if (countdownApiRef.current) {
-      if (playState === 'playing') {
+      if (absolutePlayState === 'playing') {
         countdownApiRef.current.start();
-      } else if (playState === 'pause') {
+      } else if (absolutePlayState === 'pause') {
         countdownApiRef.current.pause();
-      } else if (playState === 'stopped') {
+      } else if (absolutePlayState === 'stopped') {
         countdownApiRef.current.stop();
       }
     }
-  }, [playState]);
+  }, [absolutePlayState]);
 
   return (
     <>
       <InputWrapper>
-        <TimeInput inputTime={maxTime} onInputTimeChange={onMaxTimeChange} />
+        <TimeInput
+          inputTime={maxTime}
+          onInputTimeChange={(newMaxTime) => setMaxTime(newMaxTime)}
+        />
         <PlayController
-          onStop={() => onStop()}
-          onPause={() => onPause()}
-          onStart={() => onStart()}
-          playState={playState}
+          onPause={() => {
+            setAbsolutePlayState('pause');
+          }}
+          onStart={() => {
+            setAbsolutePlayState('playing');
+          }}
+          onStop={() => {
+            setAbsolutePlayState('stopped');
+          }}
+          playState={absolutePlayState}
         />
       </InputWrapper>
       <Countdown

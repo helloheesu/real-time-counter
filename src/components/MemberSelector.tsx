@@ -1,5 +1,5 @@
-import { MembersContext, SelectedMemberContext } from '@/MemberContext';
-import { useContext } from 'react';
+import { membersAtom, selectedMemberAtom } from '@/atoms';
+import { useAtom, useAtomValue } from 'jotai';
 import styled from 'styled-components';
 
 const Select = styled.select`
@@ -9,10 +9,8 @@ const Select = styled.select`
 `;
 
 const MemberSelector = () => {
-  const { selectedMember, setSelectedMember } = useContext(
-    SelectedMemberContext
-  );
-  const { members } = useContext(MembersContext);
+  const [selectedMember, setSelectedMember] = useAtom(selectedMemberAtom);
+  const members = useAtomValue(membersAtom);
 
   return (
     <div>

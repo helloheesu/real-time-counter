@@ -1,43 +1,40 @@
 import TimeChangeController from '@/components/TimeChangeController';
-import { PlayState } from '@/consts';
-import { useContext, useMemo, useState } from 'react';
+import { Log } from '@/consts';
+import { useCallback, useState } from 'react';
 import Countdown from 'react-countdown';
-import { LogsContext, SelectedMemberContext } from '@/MemberContext';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import {
+  absolutePlayStateAtom,
+  currentTimeLeftAtom,
+  logsAtom,
+  selectedMemberAtom,
+} from '@/atoms';
 
-const RelativeTimer = ({
-  currentTimeLeft,
-  absolutePlayState,
-}: {
-  currentTimeLeft: number;
-  absolutePlayState: PlayState;
-}) => {
+const RelativeTimer = () => {
   const [accDelta, setAccDelta] = useState(0);
-  const { addLog } = useContext(LogsContext);
-  const { selectedMember, setSelectedMember } = useContext(
-    SelectedMemberContext
-  );
+  const [selectedMember, setSelectedMember] = useAtom(selectedMemberAtom);
+  const setLogs = useSetAtom(logsAtom);
+  const currentTimeLeft = useAtomValue(currentTimeLeftAtom);
+  const absolutePlayState = useAtomValue(absolutePlayStateAtom);
 
-  const memoizedTimeChangeController = useMemo(() => {
-    return (
-      <TimeChangeController
-        onDelta={(delta) => {
-          setAccDelta((prev) => prev + delta);
-          addLog({
-            member: selectedMember,
-            delta,
-            absoluteTimestamp: currentTimeLeft,
-            currentTimestamp: currentTimeLeft + accDelta,
-          });
-          setSelectedMember('');
-        }}
-        disabled={!selectedMember}
-      />
-    );
-  }, [accDelta, addLog, currentTimeLeft, selectedMember, setSelectedMember]);
+  const handleDelta = useCallback(
+    (delta: number) => {
+      setAccDelta((prev) => prev + delta);
+      const newLog: Log = {
+        member: selectedMember,
+        delta,
+        absoluteTimestamp: currentTimeLeft,
+        currentTimestamp: currentTimeLeft + accDelta,
+      };
+      setLogs((prevLogs) => [newLog, ...prevLogs]);
+      setSelectedMember('');
+    },
+    [accDelta, currentTimeLeft, selectedMember, setLogs, setSelectedMember]
+  );
 
   return (
     <>
-      {memoizedTimeChangeController}
+      <TimeChangeController onDelta={handleDelta} disabled={!selectedMember} />
       <Countdown
         controlled={true}
         date={currentTimeLeft + accDelta}

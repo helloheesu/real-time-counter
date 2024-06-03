@@ -1,10 +1,10 @@
-import { LogsContext } from '@/MemberContext';
-import { useContext } from 'react';
 import { formatTime, pad } from '@/timeUtil';
 import React from 'react';
+import { useAtomValue } from 'jotai';
+import { logsAtom } from '@/atoms';
 
 const LogDisplay = () => {
-  const { logs } = useContext(LogsContext);
+  const logs = useAtomValue(logsAtom);
   return (
     <div className="flex flex-col items-center">
       <h1 className="mb-2">Log</h1>

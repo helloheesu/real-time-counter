@@ -20,7 +20,6 @@ const TimeChangeController = ({
       <TimeInput
         inputTime={inputTime}
         onInputTimeChange={(time) => {
-          console.log('change', time);
           setInputTime(time);
         }}
       />

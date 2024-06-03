@@ -1,9 +1,10 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import TogglableButton from './TogglableButton';
-import { MembersContext } from '@/MemberContext';
+import { useAtom } from 'jotai';
+import { membersAtom } from '@/atoms';
 
 const MembersInput = () => {
-  const { members, setMembers } = useContext(MembersContext);
+  const [members, setMembers] = useAtom(membersAtom);
   const defaultValue = useMemo(() => members.join(','), [members]);
 
   const membersInputRef = useRef<HTMLTextAreaElement>(null);
