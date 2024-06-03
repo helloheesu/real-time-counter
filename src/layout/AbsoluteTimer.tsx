@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import Countdown, { CountdownApi } from 'react-countdown';
-import PlayController from '../components/PlayController';
+import PlayControlButtons from '../components/PlayControlButtons';
 import TimeInput from '../components/TimeInput';
 import InputWrapper from '@/wrappers/InputWrapper';
 import {
@@ -51,7 +51,7 @@ const AbsoluteTimer = () => {
           inputTime={maxTime}
           onInputTimeChange={(newMaxTime) => setMaxTime(newMaxTime)}
         />
-        <PlayController
+        <PlayControlButtons
           onPause={() => {
             setAbsolutePlayState('pause');
           }}

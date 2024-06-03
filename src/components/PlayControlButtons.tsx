@@ -2,7 +2,7 @@ import ControllsWrapper from '@/wrappers/ControllsWrapper';
 import { PlayState } from '@/consts';
 import TogglableButton from './TogglableButton';
 
-const PlayController = ({
+const PlayControlButtons = ({
   onStop,
   onPause,
   onStart,
@@ -28,4 +28,4 @@ const PlayController = ({
   );
 };
 
-export default PlayController;
+export default PlayControlButtons;
