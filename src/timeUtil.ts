@@ -7,7 +7,7 @@ export const formatTime = (
   seconds: number;
 } => {
   const minutes = Math.floor(time / MILLIS_IN_MINUTE);
-  const seconds = (time % MILLIS_IN_MINUTE) / 1000;
+  const seconds = Math.floor((time % MILLIS_IN_MINUTE) / 1000);
 
   return { minutes, seconds };
 };

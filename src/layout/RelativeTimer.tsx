@@ -1,21 +1,21 @@
 import TimeChangeController from '@/components/TimeChangeController';
 import { Log } from '@/consts';
 import { useCallback, useState } from 'react';
-import Countdown from 'react-countdown';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
-  absolutePlayStateAtom,
   currentTimeLeftAtom,
   logsAtom,
+  maxTimeAtom,
   selectedMemberAtom,
 } from '@/atoms';
+import Clock from '@/components/Clock';
 
 const RelativeTimer = () => {
   const [accDelta, setAccDelta] = useState(0);
   const [selectedMember, setSelectedMember] = useAtom(selectedMemberAtom);
   const setLogs = useSetAtom(logsAtom);
   const currentTimeLeft = useAtomValue(currentTimeLeftAtom);
-  const absolutePlayState = useAtomValue(absolutePlayStateAtom);
+  const maxTime = useAtomValue(maxTimeAtom);
 
   const handleDelta = useCallback(
     (delta: number) => {
@@ -35,12 +35,7 @@ const RelativeTimer = () => {
   return (
     <>
       <TimeChangeController onDelta={handleDelta} disabled={!selectedMember} />
-      <Countdown
-        controlled={true}
-        date={currentTimeLeft + accDelta}
-        autoStart={absolutePlayState === 'playing'}
-        daysInHours={true}
-      />
+      <Clock time={currentTimeLeft + accDelta} />
     </>
   );
 };

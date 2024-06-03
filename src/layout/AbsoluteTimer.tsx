@@ -1,5 +1,4 @@
-import { useRef, useEffect } from 'react';
-import Countdown, { CountdownApi } from 'react-countdown';
+import { useEffect } from 'react';
 import PlayControlButtons from '../components/PlayControlButtons';
 import TimeInput from '../components/TimeInput';
 import InputWrapper from '@/wrappers/InputWrapper';
@@ -9,12 +8,10 @@ import {
   maxTimeAtom,
 } from '@/atoms';
 import { useAtom, useSetAtom } from 'jotai';
+import useTimer from '@/useTimer';
+import Clock from '@/components/Clock';
 
 const AbsoluteTimer = () => {
-  const countdownRef = useRef<Countdown>(null);
-  const countdownApiRef: React.MutableRefObject<CountdownApi | null> =
-    useRef<CountdownApi>(null);
-
   const [absolutePlayState, setAbsolutePlayState] = useAtom(
     absolutePlayStateAtom
   );
@@ -22,27 +19,13 @@ const AbsoluteTimer = () => {
 
   const setCurrentTimeLeft = useSetAtom(currentTimeLeftAtom);
 
-  const onTick = (totalTimeLeft: number) => {
-    setCurrentTimeLeft(totalTimeLeft);
-  };
+  const { start, pause, stop, passed, left } = useTimer({
+    maxTime,
+  });
 
   useEffect(() => {
-    if (countdownRef.current) {
-      countdownApiRef.current = countdownRef.current.getApi();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (countdownApiRef.current) {
-      if (absolutePlayState === 'playing') {
-        countdownApiRef.current.start();
-      } else if (absolutePlayState === 'pause') {
-        countdownApiRef.current.pause();
-      } else if (absolutePlayState === 'stopped') {
-        countdownApiRef.current.stop();
-      }
-    }
-  }, [absolutePlayState]);
+    setCurrentTimeLeft(left);
+  }, [left, setCurrentTimeLeft]);
 
   return (
     <>
@@ -54,25 +37,20 @@ const AbsoluteTimer = () => {
         <PlayControlButtons
           onPause={() => {
             setAbsolutePlayState('pause');
+            pause();
           }}
           onStart={() => {
             setAbsolutePlayState('playing');
+            start();
           }}
           onStop={() => {
             setAbsolutePlayState('stopped');
+            stop();
           }}
           playState={absolutePlayState}
         />
       </InputWrapper>
-      <Countdown
-        ref={countdownRef}
-        date={Date.now() + maxTime}
-        autoStart={false}
-        daysInHours={true}
-        controlled={false}
-        onTick={({ total }) => onTick(total)}
-        intervalDelay={1000}
-      />
+      <Clock time={left} />
     </>
   );
 };
